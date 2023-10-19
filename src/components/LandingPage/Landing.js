@@ -2,13 +2,11 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Search from '../Search/Search'
-import URL from '../config'
-import Table from '../Table/Table'
-
+import config from '../config.json'
+import Table from '../TableRow/Table'
 
 
 const Landing = () => {
-
     
     const [tableData,setTableData]=useState([])
     const [filteredList,setFilteredList]=useState([])
@@ -22,8 +20,8 @@ const Landing = () => {
     },[])
 
 
-    let st=page*10-10
-    let end=page*10
+    let st=page*config.pageSize-config.pageSize
+    let end=page*config.pageSize
     
 
     const searchHandler=(text)=>{
@@ -34,7 +32,7 @@ const Landing = () => {
         setFilteredList(filteredData)
         setPage(1)
         setPreviousButton(true)
-        if(Math.ceil(filteredData.length/10)===1){
+        if(Math.ceil(filteredData.length/config.pageSize)===1){
             setNextButton(true)
         }   
         else{
@@ -44,14 +42,14 @@ const Landing = () => {
     }
     
     const fetchTableData= async ()=>{
-        const data=await axios.get("https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json")
+        const data=await axios.get(config.apiEndpoint)
         setTableData(data.data)
         setFilteredList(data.data)
         
         
     }
     let arr=new Array
-    for(let i=1;i<=Math.ceil(filteredList.length/10);i++){
+    for(let i=1;i<=Math.ceil(filteredList.length/config.pageSize);i++){
         arr.push(i) 
     }
 
@@ -59,7 +57,7 @@ const Landing = () => {
         checkNavigationButton(index)
         setPage(index)
     }
-    console.log("hello",filteredList)
+   
 
     const checkNavigationButton=(index)=>{
         if(index==1){
@@ -68,7 +66,7 @@ const Landing = () => {
           else{
               setPreviousButton(false)
           }
-          if(index==Math.ceil(filteredList.length/10)){
+          if(index==Math.ceil(filteredList.length/config.pageSize)){
               setNextButton(true)   
           }
           else{
@@ -88,8 +86,6 @@ const Landing = () => {
     
     
     const checkBoxHandler=(value,checked)=>{
-        console.log(checked)
-        // let val=parseInt(value)
         if(checked){
             setSelected([...selected,value])
         }
@@ -109,7 +105,7 @@ const Landing = () => {
             setFilteredList(arr)
             
     }
-    console.log(selected)
+    
 
     const handleEdit=(id,user)=>{
         let editedList=filteredList.map((item)=>{
@@ -120,30 +116,55 @@ const Landing = () => {
                 return item
             }
         })
-        console.log("edit",editedList)
+    
         setFilteredList(editedList)
     }
-    // filteredList[0].name="himanshu"
+
+    // const checkAllHandler=()=>{
+    //     selected
+    // }
 
   return(
       <>
         <Search handler={searchHandler} />
+        <table style={{width:"80%", textAlign: "center"}}>
+        <thead>
+            <tr>
+                <th>
+                    <input
+                        // onChange={checkAllHandler}
+                        // checked={checkedAll ? true : false}
+                        type="checkbox"
+                    />
+                </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
         {filteredList.slice(st,end).map((item)=>{
-            // console.log(item)
-            return <Table key={item.id} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
+            return <Table key={item.id} selectedList={selected} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
         })}
+        </tbody>
+    </table>
+        {/*  */}
+        {/* {filteredList.slice(st,end).map((item)=>{
+            return <Table key={item.id} selectedList={selected} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
+        })} */}
         
         <div >
             <button onClick={deleteSelected}>Delete Selected</button>
             <button disabled={previousButton} onClick={()=>pageChange(1)}>First Page</button>
             <button disabled={previousButton} onClick={()=>pageChange(page-1)}>Previous Page</button>
           
-            {arr.map((item)=>{
-                return <button onClick={()=>pageChange(item)}>{item}</button>
+            {arr.map((item,idx)=>{
+                return <button key={idx} onClick={()=>pageChange(item)}>{item}</button>
                 })
             }
             <button disabled={nextButton} onClick={()=>pageChange(page+1)}>Next Page</button>
-            <button disabled={nextButton} onClick={()=>pageChange(Math.ceil(filteredList.length/10))}>Last Page</button>
+            <button disabled={nextButton} onClick={()=>pageChange(Math.ceil(filteredList.length/config.pageSize))}>Last Page</button>
         </div>
 
         
