@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Search from '../Search/Search'
 import config from '../config.json'
-import Table from '../TableRow/Table'
+import Table from '../Table/Table.js'
 
 
 const Landing = () => {
@@ -14,14 +14,18 @@ const Landing = () => {
     const [previousButton,setPreviousButton]=useState(true)
     const [nextButton,setNextButton]=useState(false)
     const [selected,setSelected]=useState([])
+    
+
 
     useEffect(()=>{
         fetchTableData()     
     },[])
 
+    
 
     let st=page*config.pageSize-config.pageSize
     let end=page*config.pageSize
+    
     
 
     const searchHandler=(text)=>{
@@ -45,7 +49,6 @@ const Landing = () => {
         const data=await axios.get(config.apiEndpoint)
         setTableData(data.data)
         setFilteredList(data.data)
-        
         
     }
     let arr=new Array
@@ -103,6 +106,7 @@ const Landing = () => {
                 return !selected.includes(item.id)
             })
             setFilteredList(arr)
+            setSelected([])
             
     }
     
@@ -110,7 +114,7 @@ const Landing = () => {
     const handleEdit=(id,user)=>{
         let editedList=filteredList.map((item)=>{
             if(item.id==id){
-                return user
+                return {...item,...user}
             }
             else{
                 return item
@@ -120,20 +124,36 @@ const Landing = () => {
         setFilteredList(editedList)
     }
 
-    // const checkAllHandler=()=>{
-    //     selected
-    // }
+    const checkAllHandler=(e)=>{
+        // console.log(e)
+        const arr=filteredList.slice(st,end).map((item)=>{
+            return item.id
+        })
+        console.log(arr)
+        if(e.target.checked){
+            
+            setSelected([...selected,...arr])
+        }
+        else{
+            const res=selected.filter((item)=>{
+                return !arr.includes(item)
+            })
+            setSelected(res)
+        }
+       
+    }
 
   return(
       <>
         <Search handler={searchHandler} />
-        <table style={{width:"80%", textAlign: "center"}}>
+        <Table selectedList={selected} filteredList={filteredList.slice(st,end)} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit} checkAllHandler={checkAllHandler}/>
+        {/* <table style={{width:"80%", textAlign: "center"}}>
         <thead>
             <tr>
                 <th>
                     <input
-                        // onChange={checkAllHandler}
-                        // checked={checkedAll ? true : false}
+                        onChange={(e)=>checkAllHandler(e)}
+                        checked={checkedAll} 
                         type="checkbox"
                     />
                 </th>
@@ -145,11 +165,11 @@ const Landing = () => {
         </thead>
         <tbody>
         {filteredList.slice(st,end).map((item)=>{
-            return <Table key={item.id} selectedList={selected} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
+            return <Table  selectedList={selected} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
         })}
         </tbody>
-    </table>
-        {/*  */}
+    </table> */}
+        
         {/* {filteredList.slice(st,end).map((item)=>{
             return <Table key={item.id} selectedList={selected} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
         })} */}
