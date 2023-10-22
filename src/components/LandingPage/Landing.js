@@ -4,7 +4,8 @@ import axios from 'axios'
 import Search from '../Search/Search'
 import config from '../config.json'
 import Table from '../Table/Table.js'
-
+import { AiOutlineLeft, AiOutlineDoubleLeft, AiOutlineRight, AiOutlineDoubleRight } from "react-icons/ai";
+import "./Landing.css"
 
 const Landing = () => {
     
@@ -16,7 +17,7 @@ const Landing = () => {
     const [selected,setSelected]=useState([])
     
 
-
+    console.log("totallist",tableData)
     useEffect(()=>{
         fetchTableData()     
     },[])
@@ -101,11 +102,15 @@ const Landing = () => {
         
     }
 
-    const deleteSelected=async ()=>{
+    const deleteSelected= ()=>{
             const arr=filteredList.filter((item)=>{
                 return !selected.includes(item.id)
             })
             setFilteredList(arr)
+           const arr2=tableData.filter((item)=>{
+               return !selected.includes(item.id)
+           })
+           setTableData(arr2)
             setSelected([])
             
     }
@@ -142,53 +147,31 @@ const Landing = () => {
         }
        
     }
+    console.log("landing filteredlist",filteredList)
 
   return(
-      <>
+      <div className='adminUi'>
         <Search handler={searchHandler} />
         <Table selectedList={selected} filteredList={filteredList.slice(st,end)} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit} checkAllHandler={checkAllHandler}/>
-        {/* <table style={{width:"80%", textAlign: "center"}}>
-        <thead>
-            <tr>
-                <th>
-                    <input
-                        onChange={(e)=>checkAllHandler(e)}
-                        checked={checkedAll} 
-                        type="checkbox"
-                    />
-                </th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {filteredList.slice(st,end).map((item)=>{
-            return <Table  selectedList={selected} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
-        })}
-        </tbody>
-    </table> */}
-        
-        {/* {filteredList.slice(st,end).map((item)=>{
-            return <Table key={item.id} selectedList={selected} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit}/>
-        })} */}
-        
-        <div >
-            <button onClick={deleteSelected}>Delete Selected</button>
-            <button disabled={previousButton} onClick={()=>pageChange(1)}>First Page</button>
-            <button disabled={previousButton} onClick={()=>pageChange(page-1)}>Previous Page</button>
-          
-            {arr.map((item,idx)=>{
-                return <button key={idx} onClick={()=>pageChange(item)}>{item}</button>
-                })
-            }
-            <button disabled={nextButton} onClick={()=>pageChange(page+1)}>Next Page</button>
-            <button disabled={nextButton} onClick={()=>pageChange(Math.ceil(filteredList.length/config.pageSize))}>Last Page</button>
+        <div className='pageRoot'>
+            <div className='deleteSelectedButton'>
+                <button onClick={deleteSelected}>Delete Selected</button>
+            </div>    
+            <div className='page'>
+                <button disabled={previousButton} onClick={()=>pageChange(1)}><AiOutlineDoubleLeft/></button>
+                <button disabled={previousButton} onClick={()=>pageChange(page-1)}><AiOutlineLeft/></button>
+            
+                {arr.map((item,idx)=>{
+                    return <button key={idx} className={item === page ? "selected" : "notSelected"} onClick={()=>pageChange(item)}>{item}</button>
+                    })
+                }
+                <button disabled={nextButton} onClick={()=>pageChange(page+1)}><AiOutlineRight/></button>
+                <button disabled={nextButton} onClick={()=>pageChange(Math.ceil(filteredList.length/config.pageSize))}><AiOutlineDoubleRight/></button>
+            </div>
         </div>
 
         
-     </>
+     </div>
     )
 }
 

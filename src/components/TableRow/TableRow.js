@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Table.css"
-// import { AiFillSave, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai"
+import { AiFillSave, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai"
 
 
 const Table=({selectedList,item, handleDelete,checkBoxHandler,handleSave})=>{
@@ -34,7 +34,7 @@ const Table=({selectedList,item, handleDelete,checkBoxHandler,handleSave})=>{
 
     
         return (
-                <tr >
+                <tr className={selectedList.includes(item.id)? "selectedRow":"null"}>
                 <td>
                 <input className="i" checked={selectedList.includes(item.id)} type="checkbox" value={item.id} onChange={(e)=> checkBoxHandler(e.target.value,e.target.checked)}/>
                 </td>
@@ -52,10 +52,10 @@ const Table=({selectedList,item, handleDelete,checkBoxHandler,handleSave})=>{
                     item.role}
                 </td> 
                 <td>
-                {!editable.includes(item.id)? <button className="i" onClick={(e)=>{handleEdit(item.id)}}>edit</button>:
-                    <button className="i" onClick={(e)=>{ handleRemove(item.id,user) }}> save</button>}
+                {!editable.includes(item.id)? <button className="editButton" onClick={(e)=>{handleEdit(item.id)}}><AiOutlineEdit/></button>:
+                    <button className="savebutton" onClick={(e)=>{ handleRemove(item.id,user) }}> <AiFillSave/></button>}
                 
-                <button className="i" onClick={(e)=>{handleDelete(item.id) }}>delete</button>
+                <button className="deleteButton" onClick={(e)=>{handleDelete(item.id) }}><AiOutlineDelete/></button>
 
                 </td>
                 </tr>

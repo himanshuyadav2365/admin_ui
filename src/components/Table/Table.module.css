@@ -1,0 +1,10 @@
+table, th, td {
+    padding: 1rem;
+    border-bottom: 1.7px solid rgba(0, 0, 0, 0.164);
+    border-collapse: collapse;
+  }
+
+table{
+    /* margin: auto; */
+    
+}

@@ -1,5 +1,8 @@
 import React, {useEffect,useState} from 'react'
 import TableRow from '../TableRow/TableRow.js'
+import Styles from './Table.module.css'
+
+
 const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handleSave,checkAllHandler}) => {
   
     const [checkedAll,setCheckedAll]=useState(false)
@@ -12,7 +15,7 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
                cnt++
             }
         })
-        if(cnt===filteredList.length){
+        if(cnt===filteredList.length && cnt!=0){
             setCheckedAll(true)
             return 
         }

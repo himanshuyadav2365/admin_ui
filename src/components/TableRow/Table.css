@@ -1,10 +1,45 @@
-.row{
-    display : flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5rem;
-}
+
 
 .i{
     text-align: center;
+}
+
+.selectedRow{
+    background-color: rgba(0, 0, 0, 0.199);
+}
+
+.editButton {
+    margin-inline: 5px;
+    border: none;
+    background-color: #ffffff00;
+}
+
+.editButton:hover{
+    cursor: pointer;
+    color: #000000b7;
+}
+
+.saveButton {
+    margin-inline: 5px;
+    border: none;
+    background-color: #ffffff00;
+}
+
+.saveButton:hover{
+    cursor: pointer;
+    color: #000000b7;
+}
+
+.deleteButton {
+    margin-inline: 5px;
+    font-size: 15px;
+    border: none;
+    color: red;
+    background-color: #ffffff00;
+}
+
+
+.deleteButton:hover{
+    cursor: pointer;
+    color: #ff0000b2;
 }
