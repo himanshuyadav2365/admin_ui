@@ -14,7 +14,7 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
                cnt++
             }
         })
-        if(cnt===filteredList?.length && cnt!==0){
+        if(cnt===filteredList.length && cnt!==0){
             setCheckedAll(true)
             return 
         }

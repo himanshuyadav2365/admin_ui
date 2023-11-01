@@ -1,5 +1,5 @@
 table, th, td {
-    padding: 1rem 0rem;
+    padding: 1rem 0.1rem;
     /* margin: ; */
     border-bottom: 1.7px solid rgba(0, 0, 0, 0.164);
     border-collapse: collapse;
@@ -9,6 +9,12 @@ table, th, td {
 
 table{
     /* margin: auto; */
-    width: 80%
+    width: 80%;
+    height:100%
     
+}
+
+th,td{
+  width: 20rem;
+  /* height: 2rem; */
 }
