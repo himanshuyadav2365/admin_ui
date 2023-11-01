@@ -7,7 +7,6 @@ const Table=({selectedList,item, handleDelete,checkBoxHandler,handleSave})=>{
     
     const [editable, setEditable]=useState([])
     const [user,setUser]=useState({id:item.id,name:item.name,role:item.role,email:item.email})
-    console.log(selectedList)
     
 
     useEffect(()=>{
@@ -25,11 +24,18 @@ const Table=({selectedList,item, handleDelete,checkBoxHandler,handleSave})=>{
 
 
     const handleRemove=(id,user)=>{
+        if(user.name && user.role && user.email){
         const newEditableList=editable.filter((item)=>{
             return !item===id
         })
         setEditable(newEditableList)
+        
         handleSave(id,user)
+        }
+        else{
+            alert("Fill all empty fields to save")
+        }
+
     }
 
     

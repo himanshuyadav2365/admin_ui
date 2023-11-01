@@ -17,7 +17,7 @@ const Landing = () => {
     const [selected,setSelected]=useState([])
     
 
-    console.log("totallist",tableData)
+    
     useEffect(()=>{
         fetchTableData()     
     },[])
@@ -33,7 +33,6 @@ const Landing = () => {
         const filteredData=tableData.filter((item)=>{
             return item.name.includes(text) || item.email.includes(text) || item.role.includes(text)
         })
-        console.log(filteredData)
         setFilteredList(filteredData)
         setPage(1)
         setPreviousButton(true)
@@ -83,7 +82,6 @@ const Landing = () => {
         const newList =filteredList.filter((item)=>{
             return item.id!==id
         })
-        console.log(id)
         setFilteredList(newList)
         setTableData(newList)
     }
@@ -125,12 +123,20 @@ const Landing = () => {
                 return item
             }
         })
+        let newTableData=tableData.map((item)=>{
+            if(item.id==id){
+                return {...item,...user}
+            }
+            else{
+                return item
+            }
+        })
     
         setFilteredList(editedList)
+        setTableData(newTableData)
     }
 
     const checkAllHandler=(e)=>{
-        // console.log(e)
         const arr=filteredList.slice(st,end).map((item)=>{
             return item.id
         })
@@ -147,8 +153,9 @@ const Landing = () => {
         }
        
     }
-    console.log("landing filteredlist",filteredList)
-
+    
+    console.log("filtered",filteredList)
+    console.log("table",tableData)
   return(
       <div className='adminUi'>
         <Search handler={searchHandler} />

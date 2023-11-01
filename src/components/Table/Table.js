@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react'
 import TableRow from '../TableRow/TableRow.js'
-import Styles from './Table.module.css'
+import './Table.module.css'
 
 
 const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handleSave,checkAllHandler}) => {
@@ -8,14 +8,13 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
     const [checkedAll,setCheckedAll]=useState(false)
 
     const compareList=()=>{
-        // let ar=filteredList.map((i)=>i.id)
         let cnt=0
         filteredList.forEach((item)=>{
             if(selectedList.includes(item.id)){
                cnt++
             }
         })
-        if(cnt===filteredList.length && cnt!=0){
+        if(cnt===filteredList.length && cnt!==0){
             setCheckedAll(true)
             return 
         }
@@ -26,7 +25,7 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
     useEffect(()=>{
         compareList()
     })
-    console.log("filteredList>>>>",filteredList)
+    
     
     return  (
         <table style={{width:"80%", textAlign: "center"}}>
@@ -46,8 +45,8 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
             </tr>
         </thead>
         <tbody>
-        {filteredList.map((item)=>{
-            return <TableRow  selectedList={selectedList} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleSave}/>
+        {  filteredList.length===0? <tr colspan="4" styles={{"width":"100%"}}><td>No record found</td></tr>: filteredList.map((item)=>{
+            return <TableRow  key={item.id} selectedList={selectedList} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleSave}/>
         })}
         </tbody>
     </table>

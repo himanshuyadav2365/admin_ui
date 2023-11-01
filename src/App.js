@@ -1,7 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import Landing from './components/LandingPage/Landing';
-import URL from './components/config';
+
 
 function App() {
   return (
