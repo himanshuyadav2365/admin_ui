@@ -45,16 +45,16 @@ const Table=({selectedList,item, handleDelete,checkBoxHandler,handleSave})=>{
                 <input className="i" checked={selectedList.includes(item.id)} type="checkbox" value={item.id} onChange={(e)=> checkBoxHandler(e.target.value,e.target.checked)}/>
                 </td>
                 <td>
-                    {editable.includes(item.id)?<input value={user.name} onChange={(e)=>handler(e)} name="name"/>:
+                    {editable.includes(item.id)?<input className="i" value={user.name} onChange={(e)=>handler(e)} name="name"/>:
                     item.name}
                 </td>
                    
                 <td>
-                    {editable.includes(item.id)?<input value={user.email} onChange={(e)=>handler(e)} name="email" />:
+                    {editable.includes(item.id)?<input className="i" value={user.email} onChange={(e)=>handler(e)} name="email" />:
                     item.email}
                 </td>
                 <td> 
-                {editable.includes(item.id)?<input value={user.role} onChange={(e)=>handler(e)} name="role"/>:
+                {editable.includes(item.id)?<input className="i" value={user.role} onChange={(e)=>handler(e)} name="role"/>:
                     item.role}
                 </td> 
                 <td>

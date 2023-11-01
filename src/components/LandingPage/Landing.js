@@ -15,11 +15,13 @@ const Landing = () => {
     const [previousButton,setPreviousButton]=useState(true)
     const [nextButton,setNextButton]=useState(false)
     const [selected,setSelected]=useState([])
-    
+    const [loading,setLoading]=useState(false)
 
     
     useEffect(()=>{
-        fetchTableData()     
+        setLoading(true)
+        console.log("loading")
+        fetchTableData()  
     },[])
 
     
@@ -46,9 +48,11 @@ const Landing = () => {
     }
     
     const fetchTableData= async ()=>{
+        
         const data=await axios.get(config.apiEndpoint)
         setTableData(data.data)
         setFilteredList(data.data)
+        setLoading(false)
         
     }
     let arr=new Array
@@ -156,10 +160,17 @@ const Landing = () => {
     
     console.log("filtered",filteredList)
     console.log("table",tableData)
+
+    if(loading){
+        return <div className="loading-container"><p className="loading-text">Loading...</p></div>
+        
+    }
+
   return(
+      
       <div className='adminUi'>
         <Search handler={searchHandler} />
-        <Table selectedList={selected} filteredList={filteredList.slice(st,end)} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit} checkAllHandler={checkAllHandler}/>
+        <Table selectedList={selected} filteredList={filteredList?.slice(st,end)} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleEdit} checkAllHandler={checkAllHandler}/>
         <div className='pageRoot'>
             <div className='deleteSelectedButton'>
                 <button onClick={deleteSelected}>Delete Selected</button>

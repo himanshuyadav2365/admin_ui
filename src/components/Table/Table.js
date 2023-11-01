@@ -14,7 +14,7 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
                cnt++
             }
         })
-        if(cnt===filteredList.length && cnt!==0){
+        if(cnt===filteredList?.length && cnt!==0){
             setCheckedAll(true)
             return 
         }
@@ -45,7 +45,7 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
             </tr>
         </thead>
         <tbody>
-        {  filteredList.length===0? <tr colspan="4" styles={{"width":"100%"}}><td>No record found</td></tr>: filteredList.map((item)=>{
+        {  filteredList?.length===0? <tr><td colSpan={"5"}>No record found</td></tr>: filteredList.map((item)=>{
             return <TableRow  key={item.id} selectedList={selectedList} item={item} handleDelete={handleDelete} checkBoxHandler={checkBoxHandler} handleSave={handleSave}/>
         })}
         </tbody>

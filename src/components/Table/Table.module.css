@@ -1,10 +1,13 @@
 table, th, td {
-    padding: 1rem;
+    padding: 1rem 0rem;
+    /* margin: ; */
     border-bottom: 1.7px solid rgba(0, 0, 0, 0.164);
     border-collapse: collapse;
+    
   }
 
-table{
+td{
     /* margin: auto; */
+    /* width: 4rem; */
     
 }
