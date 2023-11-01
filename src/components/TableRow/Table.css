@@ -2,7 +2,10 @@
 
 .i{
     text-align: center;
-    width: 4rem;
+    width: 95%;
+    height: 100%;
+    padding: 0rem;
+    box-sizing: border-box;
 }
 
 .selectedRow{

@@ -28,7 +28,8 @@ const Table = ({selectedList ,filteredList ,handleDelete, checkBoxHandler, handl
     
     
     return  (
-        <table style={{width:"80%", textAlign: "center"}}>
+        // <table style={{width:"80%", textAlign: "center"}}>
+        <table>
         <thead>
             <tr>
                 <th>

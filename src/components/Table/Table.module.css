@@ -3,11 +3,12 @@ table, th, td {
     /* margin: ; */
     border-bottom: 1.7px solid rgba(0, 0, 0, 0.164);
     border-collapse: collapse;
+    text-align: center;
     
   }
 
-td{
+table{
     /* margin: auto; */
-    /* width: 4rem; */
+    width: 80%
     
 }
