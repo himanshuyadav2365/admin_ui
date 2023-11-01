@@ -33,7 +33,7 @@ button:disabled{
     
     position: absolute;
     border-radius: 12%;
-    margin: 1rem;
+    margin-bottom: 1rem;
 }
 
 .deleteSelectedButton button {
